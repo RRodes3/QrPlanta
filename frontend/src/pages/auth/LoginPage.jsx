@@ -36,7 +36,7 @@ function LoginPage() {
       if (data.user.role === 'ADMIN') {
         navigate('/admin/users');
       } else {
-        navigate('/login');
+        navigate('/user');
       }
     } catch (error) {
       console.error('Error en login:', error);

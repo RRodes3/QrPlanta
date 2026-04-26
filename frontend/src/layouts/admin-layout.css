@@ -1,0 +1,22 @@
+.admin-layout-mobile-header {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .admin-layout-mobile-header {
+    display: flex !important;
+  }
+
+  .admin-layout-sidebar {
+    transform: translateX(-100%);
+    width: 260px !important;
+    max-width: 85vw;
+  }
+
+  .admin-layout-main {
+    margin-left: 0 !important;
+    padding: 16px 12px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+}

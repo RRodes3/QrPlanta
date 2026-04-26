@@ -3,9 +3,27 @@ import {
   createUserRequest,
   deleteUserRequest,
   getUsersRequest,
-} from '../api/user.api';
+} from '../../api/user.api';
 
-function UsersPage() {
+function AdminPage() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= 768;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [users, setUsers] = useState([]);
   const [form, setForm] = useState({
     name: '',
@@ -97,6 +115,118 @@ function UsersPage() {
         error.response?.data?.message || 'No se pudo eliminar el usuario'
       );
     }
+  };
+
+  // Estilos dependientes de isMobile
+  const styles = {
+    page: {
+      minHeight: '100vh',
+      background: '#f3f4f6',
+      padding: isMobile ? '16px 10px' : '30px 20px',
+    },
+    container: {
+      width: '100%',
+      maxWidth: isMobile ? '100%' : '1100px',
+      margin: '0 auto',
+      display: 'grid',
+      gap: isMobile ? '16px' : '24px',
+    },
+    formCard: {
+      background: '#fff',
+      borderRadius: '16px',
+      padding: isMobile ? '16px' : '24px',
+      boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+      width: '100%',
+      boxSizing: 'border-box',
+    },
+    tableCard: {
+      background: '#fff',
+      borderRadius: '16px',
+      padding: isMobile ? '16px' : '24px',
+      boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+      width: '100%',
+      boxSizing: 'border-box',
+    },
+    title: {
+      marginTop: 0,
+      marginBottom: '8px',
+      fontSize: isMobile ? '28px' : undefined,
+    },
+    subtitle: {
+      marginTop: 0,
+      marginBottom: '20px',
+      color: '#6b7280',
+      fontSize: isMobile ? '14px' : undefined,
+    },
+    tableTitle: {
+      marginTop: 0,
+      marginBottom: '16px',
+      fontSize: isMobile ? '24px' : undefined,
+    },
+    form: {
+      display: 'grid',
+      gap: '16px',
+    },
+    field: {
+      display: 'grid',
+      gap: '8px',
+    },
+    input: {
+      padding: isMobile ? '9px 10px' : '10px 12px',
+      borderRadius: '8px',
+      border: '1px solid #d1d5db',
+      fontSize: isMobile ? '13px' : '14px',
+      width: '100%',
+      boxSizing: 'border-box',
+    },
+    button: {
+      padding: isMobile ? '11px' : '12px',
+      border: 'none',
+      borderRadius: '8px',
+      background: '#111827',
+      color: '#fff',
+      cursor: 'pointer',
+      fontSize: isMobile ? '13px' : '14px',
+      width: '100%',
+    },
+    deleteButton: {
+      padding: isMobile ? '6px 10px' : '8px 12px',
+      border: 'none',
+      borderRadius: '8px',
+      background: '#dc2626',
+      color: '#fff',
+      cursor: 'pointer',
+      fontSize: isMobile ? '12px' : '13px',
+    },
+    error: {
+      color: 'crimson',
+      margin: 0,
+    },
+    success: {
+      color: 'green',
+      margin: 0,
+    },
+    tableWrapper: {
+      overflowX: 'auto',
+      width: '100%',
+    },
+    table: {
+      width: '100%',
+      minWidth: isMobile ? '700px' : '100%',
+      borderCollapse: 'collapse',
+    },
+    th: {
+      textAlign: 'left',
+      padding: isMobile ? '10px' : '12px',
+      borderBottom: '1px solid #e5e7eb',
+      background: '#f9fafb',
+      fontSize: isMobile ? '13px' : undefined,
+    },
+    td: {
+      padding: isMobile ? '10px' : '12px',
+      borderBottom: '1px solid #e5e7eb',
+      fontSize: isMobile ? '13px' : undefined,
+    },
   };
 
   return (
@@ -217,100 +347,6 @@ function UsersPage() {
   );
 }
 
-const styles = {
-  page: {
-    minHeight: '100vh',
-    background: '#f3f4f6',
-    padding: '30px 20px',
-  },
-  container: {
-    maxWidth: '1100px',
-    margin: '0 auto',
-    display: 'grid',
-    gap: '24px',
-  },
-  formCard: {
-    background: '#fff',
-    borderRadius: '16px',
-    padding: '24px',
-    boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
-  },
-  tableCard: {
-    background: '#fff',
-    borderRadius: '16px',
-    padding: '24px',
-    boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
-  },
-  title: {
-    marginTop: 0,
-    marginBottom: '8px',
-  },
-  subtitle: {
-    marginTop: 0,
-    marginBottom: '20px',
-    color: '#6b7280',
-  },
-  tableTitle: {
-    marginTop: 0,
-    marginBottom: '16px',
-  },
-  form: {
-    display: 'grid',
-    gap: '16px',
-  },
-  field: {
-    display: 'grid',
-    gap: '8px',
-  },
-  input: {
-    padding: '10px 12px',
-    borderRadius: '8px',
-    border: '1px solid #d1d5db',
-    fontSize: '14px',
-  },
-  button: {
-    padding: '12px',
-    border: 'none',
-    borderRadius: '8px',
-    background: '#111827',
-    color: '#fff',
-    cursor: 'pointer',
-    fontSize: '14px',
-  },
-  deleteButton: {
-    padding: '8px 12px',
-    border: 'none',
-    borderRadius: '8px',
-    background: '#dc2626',
-    color: '#fff',
-    cursor: 'pointer',
-    fontSize: '13px',
-  },
-  error: {
-    color: 'crimson',
-    margin: 0,
-  },
-  success: {
-    color: 'green',
-    margin: 0,
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  th: {
-    textAlign: 'left',
-    padding: '12px',
-    borderBottom: '1px solid #e5e7eb',
-    background: '#f9fafb',
-  },
-  td: {
-    padding: '12px',
-    borderBottom: '1px solid #e5e7eb',
-  },
-};
 
-export default UsersPage;
+
+export default AdminPage;
