@@ -52,7 +52,7 @@ function AppRouter() {
           <Route index element={<UserDashboardPage />} />
           <Route path="scan" element={<UserScanPage />} />
           <Route path="vehicles" element={<UserVehiclesPage />} />
-          <Route path="result" element={<UserResultPage />} />
+          <Route path="result/:id" element={<UserResultPage />} />
           <Route path="register" element={<UserRegisterPage/>} />
         </Route>
 
