@@ -7,10 +7,15 @@ function UserDashboardPage() {
             <div style={styles.card}>
                 <h1 style={styles.title}>Dashboard de Usuario</h1>
                 <p style={styles.text}>
-                    Desde aquí puedes iniciar el escaneo de códigos QR para consultar la información de los vehículos. 
+                    Desde aquí puedes iniciar el escaneo de códigos QR para
+                     consultar la información de los vehículos o registrar
+                     una etapa de producción.
                 </p>
-                <button style={styles.button} onClick={() => navigate('./scan')}>
-                    Iniciar escaneos
+                <button style={styles.button} onClick={() => navigate('/user/scan')}>
+                    Consultar estado de vehículo
+                </button>
+                <button style={{...styles.button, marginLeft: '12px'}} onClick={() => navigate('/user/register')}>
+                    Registrar etapa de producción
                 </button>
             </div>
         </div>

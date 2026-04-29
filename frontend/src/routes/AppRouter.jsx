@@ -11,6 +11,7 @@ import UserDashboardPage from '../pages/user/UserDashboardPage';
 import UserScanPage from '../pages/user/UserScanPage';
 import UserVehiclesPage from '../pages/user/UserVehiclesPage';
 import UserResultPage from '../pages/user/UserResultPage';
+import UserRegisterPage from '../pages/user/UserRegisterPage';
 
 
 function AppRouter() {
@@ -52,6 +53,7 @@ function AppRouter() {
           <Route path="scan" element={<UserScanPage />} />
           <Route path="vehicles" element={<UserVehiclesPage />} />
           <Route path="result" element={<UserResultPage />} />
+          <Route path="register" element={<UserRegisterPage/>} />
         </Route>
 
 

@@ -21,11 +21,14 @@ function UserLayout() {
                     <NavLink to="/user" style={getLinkStyle}>
                         Dashboard
                     </NavLink>
+                    <NavLink to="/user/register" style={getLinkStyle}>
+                        Registrar etapa de vehículo
+                    </NavLink>
                     <NavLink to="/user/scan" style={getLinkStyle}>
-                        Escanear QR
+                        Consultar estado de vehículo
                     </NavLink>
                     <NavLink to="/user/vehicles" style={getLinkStyle}>
-                        Estado de vehículos
+                        Tabla de estado de vehículos
                     </NavLink>
                     <button onClick={handleLogout} style={styles.logoutButton}>
                     Cerrar sesión

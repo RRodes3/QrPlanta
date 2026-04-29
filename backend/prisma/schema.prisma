@@ -18,6 +18,20 @@ enum Role {
   USER
 }
 
+enum StageName {
+  RECIEN_INGRESADO_A_LA_PLANTA
+  SOLDADURA
+  PINTURA
+  MONTAJE
+  CONTROL_DE_CALIDAD
+  PROCESO_FINALIZADO
+}
+
+enum MovementSourceType {
+  IMPORT
+  SCAN
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -26,17 +40,38 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  movementsRegistered Movement[] @relation("UserRegisteredMovements")
 }
 
 model Car {
-  id             Int      @id @default(autoincrement())
-  niv            String   @unique
-  chasis         String?
-  celulaPintura  String?
-  celulaEnsamble String?
-  qrValue        String   @unique
-  fechaPintura   DateTime?
-  fechaEnsamble  DateTime?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id           Int        @id @default(autoincrement())
+  niv          String     @unique
+  chasis       String?
+  qrValue      String     @unique
+  qrExported   Boolean    @default(false)
+  qrExportedAt DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  movements    Movement[]
+}
+
+model Movement {
+  id                 Int                @id @default(autoincrement())
+  carId              Int
+  stageName          StageName
+  registeredAt       DateTime
+  registeredByUserId Int?
+  registeredByName   String?
+  sourceType         MovementSourceType
+  createdAt          DateTime           @default(now())
+
+  car                Car                @relation(fields: [carId], references: [id], onDelete: Cascade)
+  registeredByUser   User?              @relation("UserRegisteredMovements", fields: [registeredByUserId], references: [id], onDelete: SetNull)
+
+  @@index([carId])
+  @@index([registeredByUserId])
+  @@index([stageName])
+  @@index([registeredAt])
 }
