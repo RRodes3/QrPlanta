@@ -3,8 +3,24 @@ const prisma = require('../config/prisma');
 const getCars = async (req, res) => {
   try {
     const cars = await prisma.car.findMany({
+      include: {
+        movements: {
+          include: {
+            registeredByUser: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              },
+            },
+          },
+          orderBy:{
+            registeredAt: 'desc',
+          },
+        },
+      },
       orderBy: {
-        registeredAt: 'desc',
+        id: 'desc',
       },
     });
 
