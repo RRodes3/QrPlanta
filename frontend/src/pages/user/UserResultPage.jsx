@@ -52,7 +52,13 @@ function UserResultPage() {
             <>
               <div style={styles.infoBox}>
                 <p><strong>NIV:</strong> {car.niv}</p>
-                <p><strong>Chasis:</strong> {car.chasis || 'N/A'}</p>
+                {/* CHASIS ES UN DATO PARA POSIBLE FUTURO
+                  Archivos en los que se encuentra:
+                  * UserResultPage.jsx (este)
+                  * SeedCar.js /Backend
+                  * Car.controller.js /Backend
+                */}
+                {/* <p><strong>Chasis:</strong> {car.chasis || 'N/A'}</p> */}
                 <p><strong>QR:</strong> {car.qrValue}</p>
                 <p>
                   <strong>Etapa actual:</strong>{' '}

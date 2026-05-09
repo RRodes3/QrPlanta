@@ -18,7 +18,7 @@ async function main() {
   const car = await prisma.car.create({
     data: {
       niv,
-      chasis: 'CHASIS-TEST-001',
+//      chasis: 'CHASIS-TEST-001',
       qrValue,
       qrExported: false,
       qrExportedAt: null,
