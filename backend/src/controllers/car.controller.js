@@ -125,7 +125,7 @@ const searchCarsForQrExport = async (req, res) => {
 
     const cars = await prisma.car.findMany({
       where: {
-        QR:[
+        OR:[
           {
             niv: {
               contains: search,
@@ -172,9 +172,7 @@ const exportCarQrsPdf = async (req, res) => {
 
     let where = {};
 
-    if (mode == 'ALL') {
-      where = {};
-    } else if (mode == 'NOT_EXPORTED') {
+    if (mode == 'NOT_EXPORTED') {
       where = {
         qrExported: false,
       };
