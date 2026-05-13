@@ -235,7 +235,7 @@
 
 .qr-pdf-highlight {
   background: transparent;
-  color: inherit;
+  color: rgb(0, 26, 255);
   font-weight: 800;
   text-decoration: underline;
   text-decoration-thickness: 2px;

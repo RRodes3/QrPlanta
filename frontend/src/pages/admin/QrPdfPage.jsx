@@ -65,9 +65,9 @@ function QrPdfPage() {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-        loadCars(search);
+      loadCars(search);
     }, 350);
-    
+
     return () => clearTimeout(timeoutId);
   }, [search]);
 
@@ -125,7 +125,10 @@ function QrPdfPage() {
         carIds: mode === 'SELECTED' ? selectedIds : [],
       });
 
-      const fileName = `qr-vehiculos-${mode.toLowerCase()}.pdf`;
+      const fileName =
+        mode === 'NOT_EXPORTED'
+          ? 'qr-vehiculos-pendientes.pdf'
+          : 'qr-vehiculos-seleccionados.pdf';
 
       downloadPdfBlob(pdfBlob, fileName);
 
@@ -163,11 +166,11 @@ function QrPdfPage() {
     const afterMatch = value.slice(matchIndex + searchValue.length);
 
     return (
-        <>
-            {beforeMatch}
-            <mark className='qr-pdf-highlight'>{match}</mark>
-            {afterMatch}
-        </>
+      <>
+        {beforeMatch}
+        <mark className="qr-pdf-highlight">{match}</mark>
+        {afterMatch}
+      </>
     );
   };
 
@@ -178,8 +181,8 @@ function QrPdfPage() {
           <div>
             <h1>Exportar PDF de QRs</h1>
             <p>
-              Genera códigos QR para los vehículos registrados. Puedes exportar
-              todos, solo los pendientes o seleccionar vehículos específicos.
+              Genera códigos QR para vehículos pendientes de exportación o
+              selecciona vehículos específicos para reimprimir sus QRs.
             </p>
           </div>
         </div>
@@ -228,14 +231,12 @@ function QrPdfPage() {
             onClick={handleToggleAllVisible}
             disabled={cars.length === 0}
           >
-            {allVisibleSelected
-              ? 'Quitar selección'
-              : 'Seleccionar visibles'}
+            {allVisibleSelected ? 'Quitar selección' : 'Seleccionar visibles'}
           </button>
         </div>
 
         {loading ? (
-          <p className="qr-pdf-empty">Cargando vehículos...</p>
+          <p className="qr-pdf-empty">Buscando vehículos...</p>
         ) : cars.length === 0 ? (
           <p className="qr-pdf-empty">
             No hay vehículos para mostrar. Intenta con otra búsqueda.
@@ -264,9 +265,9 @@ function QrPdfPage() {
                       />
                     </td>
 
-                    <td>{car.niv}</td>
+                    <td>{highlightText(car.niv)}</td>
 
-                    <td>{car.qrValue}</td>
+                    <td>{highlightText(car.qrValue)}</td>
 
                     <td>
                       <span
