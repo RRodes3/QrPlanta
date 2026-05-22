@@ -253,6 +253,7 @@ const exportCarQrsPdf = async (req, res) => {
       if (positionInPage === 1) {
         page.drawLine({
           start: { x: 40, y: halfPageHeight },
+          end: { x: pageWidth - 40, y: halfPageHeight },
           thickness: 1,
           color: rgb(0.75, 0.75, 0.75),
         });
@@ -339,10 +340,10 @@ const exportCarQrsPdf = async (req, res) => {
 
     const fileName = `qr-vehiculos-${Date.now()}.pdf`;
     
-    res.setHeader('Content-Type', 'Aplication/pdf');
+    res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
       'Content-Disposition',
-      `attachment; filename="${fileName}`
+      `attachment; filename="${fileName}"`
     );
 
     return res.status(200).send(Buffer.from(pdfBytes));
