@@ -233,11 +233,12 @@
   }
 }
 
-.qr-pdf-highlight {
-  background: transparent;
-  color: rgb(0, 26, 255);
-  font-weight: 800;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
+.movements-highlight {
+  background: RGBA(255, 230, 0, 0.55);
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+  text-decoration-thickness: none;
+  border-radius: 3px;
+  padding: 0 2px;
 }
