@@ -16,9 +16,9 @@ function QrScanner({ onScanSuccess, onCancel }) {
                 setError('');
                 setIsStarting(true);
 
-                const cameras = await Html5QrCode.getCameras();
+                const cameras = await Html5QrCodeScanner.getCameras();
 
-                if (!cameras || cameras.Length === 0) {
+                if (!cameras || cameras.length === 0) {
                     setError('No se encontró ningúna cámara disponible');
                     return;
                 }
@@ -28,7 +28,7 @@ function QrScanner({ onScanSuccess, onCancel }) {
                         camera.label.toLowerCase().includes('back')
                 ) || cameras[0];
 
-                const scanner = new Html5QrCode(scannerIdRef.current);
+                const scanner = new Html5QrCodeScanner(scannerIdRef.current);
                 scannerRef.current = scanner;
 
                 await scanner.start(
