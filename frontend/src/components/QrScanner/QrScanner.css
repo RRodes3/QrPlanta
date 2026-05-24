@@ -1,0 +1,60 @@
+.qr-scanner {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+}
+
+.qr-scanner-header h3 {
+  margin: 0 0 6px;
+  color: #111827;
+}
+
+.qr-scanner-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.qr-scanner-box {
+  width: 100%;
+  max-width: 420px;
+  min-height: 320px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  background: #f9fafb;
+}
+
+.qr-scanner-box video {
+  border-radius: 14px;
+}
+
+.qr-scanner-message {
+  margin: 0;
+  color: #374151;
+  text-align: center;
+}
+
+.qr-scanner-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.qr-scanner-manual-button {
+  width: fit-content;
+  margin: 0 auto;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qr-scanner-manual-button:hover {
+  background: #f3f4f6;
+}

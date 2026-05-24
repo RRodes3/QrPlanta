@@ -1,43 +1,109 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import QrScanner from '../../components/QrScanner/QrScanner';
 
 function UserScanPage() {
   const navigate = useNavigate();
+
   const [qrValue, setQrValue] = useState('');
+  const [qrInputMode, setQrInputMode] = useState('camera');
+  const [error, setError] = useState('');
+
+  const goToResult = useCallback(
+    (value) => {
+      const cleanQrValue = String(value || '').trim();
+
+      if (!cleanQrValue) {
+        setError('No se detectó un código QR válido.');
+        return;
+      }
+
+      navigate(`/user/result/${encodeURIComponent(cleanQrValue)}`);
+    },
+    [navigate]
+  );
+
+  const handleScanSuccess = useCallback(
+    (decodedText) => {
+      goToResult(decodedText);
+    },
+    [goToResult]
+  );
+
+  const handleManualMode = useCallback(() => {
+    setQrInputMode('manual');
+    setError('');
+  }, []);
+
+  const handleCameraMode = () => {
+    setQrValue('');
+    setError('');
+    setQrInputMode('camera');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!qrValue.trim()) return;
+    if (!qrValue.trim()) {
+      setError('Debes escribir el código QR del vehículo.');
+      return;
+    }
 
-    navigate(`/user/result/${encodeURIComponent(qrValue.trim())}`);
+    goToResult(qrValue);
   };
 
   return (
     <div style={styles.wrapper}>
       <div style={styles.card}>
         <h1 style={styles.title}>Consultar vehículo por QR</h1>
+
         <p style={styles.text}>
-          Captura el valor del QR del vehículo para consultar su estado e historial.
+          Escanea el código QR del vehículo para consultar su estado actual e
+          historial dentro de la planta.
         </p>
 
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.field}>
-            <label htmlFor="qrValue">QR del vehículo</label>
-            <input
-              id="qrValue"
-              type="text"
-              value={qrValue}
-              onChange={(e) => setQrValue(e.target.value)}
-              placeholder="Ej. QR-TEST-0001"
-              style={styles.input}
-            />
-          </div>
+        {qrInputMode === 'camera' ? (
+          <QrScanner
+            onScanSuccess={handleScanSuccess}
+            onCancel={handleManualMode}
+          />
+        ) : (
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <div style={styles.field}>
+              <label htmlFor="qrValue">QR del vehículo</label>
 
-          <button type="submit" style={styles.button}>
-            Consultar vehículo
-          </button>
-        </form>
+              <input
+                id="qrValue"
+                type="text"
+                value={qrValue}
+                onChange={(e) => {
+                  setQrValue(e.target.value);
+                  setError('');
+                }}
+                placeholder="Ej. QR-TEST-0001"
+                style={styles.input}
+              />
+            </div>
+
+            {error && <p style={styles.error}>{error}</p>}
+
+            <button type="submit" style={styles.button}>
+              Consultar vehículo
+            </button>
+
+            <button
+              type="button"
+              style={styles.secondaryButton}
+              onClick={handleCameraMode}
+            >
+              Usar cámara
+            </button>
+          </form>
+        )}
+
+        {qrInputMode === 'camera' && error && (
+          <p style={styles.error}>{error}</p>
+        )}
 
         <button style={styles.backButton} onClick={() => navigate('/user')}>
           Regresar
@@ -94,13 +160,27 @@ const styles = {
     cursor: 'pointer',
     fontSize: '14px',
   },
+  secondaryButton: {
+    border: '1px solid #d1d5db',
+    borderRadius: '10px',
+    padding: '12px 18px',
+    background: '#fff',
+    color: '#111827',
+    cursor: 'pointer',
+    fontWeight: 700,
+  },
   backButton: {
+    marginTop: '20px',
     border: '1px solid #d1d5db',
     borderRadius: '10px',
     padding: '10px 16px',
     background: '#fff',
     color: '#111827',
     cursor: 'pointer',
+  },
+  error: {
+    color: 'crimson',
+    margin: 0,
   },
 };
 
