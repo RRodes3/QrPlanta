@@ -8,7 +8,7 @@
 
 */
 -- AlterTable
-ALTER TABLE `car` DROP COLUMN `celulaEnsamble`,
+ALTER TABLE `Car` DROP COLUMN `celulaEnsamble`,
     DROP COLUMN `celulaPintura`,
     DROP COLUMN `fechaEnsamble`,
     DROP COLUMN `fechaPintura`,
