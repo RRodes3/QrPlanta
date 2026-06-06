@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
+    "start": "npx prisma migrate deploy && node src/server.js",
+    "postinstall": "npx prisma generate",
     "seed:admin": "node src/scripts/seedAdmin.js",
     "seed:car": "node src/scripts/seedCar.js"
   },
