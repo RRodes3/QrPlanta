@@ -198,6 +198,17 @@ function QrPdfPage() {
               ? 'Generando...'
               : 'Exportar solo no exportados'}
           </button>
+
+          <button
+            type="button"
+            className="qr-pdf-button qr-pdf-button-outline"
+            onClick={() => handleExport('SELECTED')}
+            disabled={Boolean(downloadingMode) || selectedCount === 0}
+          >
+            {downloadingMode === 'SELECTED'
+              ? 'Generando...'
+              : `Exportar seleccionados (${selectedCount})`}
+          </button>
         </div>
 
         <div className="qr-pdf-search">
@@ -292,19 +303,6 @@ function QrPdfPage() {
             </table>
           </div>
         )}
-
-        <div className="qr-pdf-footer-actions">
-          <button
-            type="button"
-            className="qr-pdf-button qr-pdf-button-dark"
-            onClick={() => handleExport('SELECTED')}
-            disabled={Boolean(downloadingMode) || selectedCount === 0}
-          >
-            {downloadingMode === 'SELECTED'
-              ? 'Generando...'
-              : `Exportar seleccionados (${selectedCount})`}
-          </button>
-        </div>
       </section>
     </div>
   );
